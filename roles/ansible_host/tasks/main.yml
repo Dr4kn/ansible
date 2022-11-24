@@ -1,0 +1,28 @@
+---
+- name: Update packages
+  apt:
+    update_cache: true
+    upgrade: true
+
+- name: Install packages that ansible uses
+  apt:
+    name:
+      - sshpass
+      - aptitude
+      - python3-docker
+      - ansible-lint
+      - python3-pip
+      - python3-apt
+    state: present
+
+- name: Install pexpect
+  pip:
+    name: pexpect
+
+- name: Install ansible_galaxy packages # to be able to to install alnsible galaxy packages with ansible
+  command: "ansible-galaxy collection install {{ item }}"
+  with_items:
+    - community.general
+    - community.docker
+  register: myoutput
+  changed_when: myoutput.rc != 0

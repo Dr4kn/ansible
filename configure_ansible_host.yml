@@ -1,0 +1,6 @@
+---
+- name: Install software needed ro run ansible playbooks
+  hosts: local
+  become: true
+  roles:
+    - role: ansible_host
