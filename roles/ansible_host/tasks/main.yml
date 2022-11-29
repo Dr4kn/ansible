@@ -19,7 +19,7 @@
   pip:
     name: pexpect
 
-- name: Install ansible_galaxy packages # to be able to to install alnsible galaxy packages with ansible
+- name: Install ansible_galaxy packages # to be able to to install ansible galaxy packages with ansible
   command: "ansible-galaxy collection install {{ item }}"
   with_items:
     - community.general
