@@ -5,23 +5,23 @@
     state: present
     update_cache: true
 
-# - block:
-#     - name: change user shell to zsh
-#       vars:
-#         username: "{{ ansible_user_id }}"
-#       user:
-#         name: "{{ username }}"
-#         shell: /bin/zsh
-#   become: false
+- block:
+    - name: change user shell to zsh
+      vars:
+        username: "{{ ansible_user_id }}"
+      user:
+        name: "{{ username }}"
+        shell: /bin/zsh
+  become: false
 
-# - block:
-#     - name: change root shell to zsh
-#       vars:
-#         username: "{{ ansible_user_id }}"
-#       user:
-#         name: "{{ username }}"
-#         shell: /bin/zsh
-#   become: true
+- block:
+    - name: change root shell to zsh
+      vars:
+        username: "{{ ansible_user_id }}"
+      user:
+        name: "{{ username }}"
+        shell: /bin/zsh
+  become: true
 
 - name: Download ohmyzsh installer
   get_url:
@@ -29,12 +29,15 @@
     dest: /tmp/zsh-installer.sh
     mode: 755
 
-- name: Execute the ohmyzsh installer
-  shell:
+- name: install ohmyzsh
+  command:
     chdir: /tmp
     cmd: ./zsh-installer.sh
-  # changed_when: "The $ZSH folder already exists"
-# - name: Remove the ohmyzsh installer
-#   file:
-#     path: /tmp/zsh-installer.sh
-#     state: absent
+  register: installer_output
+  changed_when: "'folder already exists' not in installer_output.stdout"
+  failed_when: installer_output.rc == 1 and 'folder already exists' not in installer_output.stdout
+
+- name: Remove the ohmyzsh installer
+  file:
+    path: /tmp/zsh-installer.sh
+    state: absent
