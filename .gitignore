@@ -1,4 +1,6 @@
 # used for testing new playbooks
 testing.yml
 testing.yaml
-roles/testing/tasks/main.yml
+roles/testing/*
+testing.txt
+
