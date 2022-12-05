@@ -1,0 +1,42 @@
+---
+- name: Check if zsh-autosuggestions is installed
+  stat:
+    path: ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+  register: suggestion_installed
+
+- name: Clone zsh-autosuggestions in zsh plugins folder
+  git:
+    repo: https://github.com/zsh-users/zsh-autosuggestions
+    dest: ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+    version: master
+    depth: 1
+  when: suggestion_installed.stat.islnk is not defined
+  changed_when: suggestion_installed.stat.islnk is not defined
+
+- name: Check if k is installed
+  stat:
+    path: ~/.oh-my-zsh/custom/plugins/k
+  register: k_installed
+
+- name: Clone k in zsh plugins folder
+  git:
+    repo: https://github.com/supercrabtree/k
+    dest: ~/.oh-my-zsh/custom/plugins/k
+    version: master
+    depth: 1
+  when: k.stat.islnk is not defined
+  changed_when: k.stat.islnk is not defined
+
+- name: Check if powerlevel10k is installed
+  stat:
+    path: ~/.oh-my-zsh/custom/plugins/powerlevel10k
+  register: p10k
+
+- name: Clone powerlevel10k in zsh plugins folder
+  git:
+    repo: https://github.com/romkatv/powerlevel10k
+    dest: ~/.oh-my-zsh/custom/plugins/powerlevel10k
+    version: master
+    depth: 1
+  when: p10k.stat.islnk is not defined
+  changed_when: p10k.stat.islnk is not defined
