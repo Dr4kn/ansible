@@ -1,5 +1,11 @@
 ---
+- name: Get current user
+  command: whoami
+  register: current_user
+  changed_when: current_user.rc == 0
+
 - name: Install zsh
+  become: true
   apt:
     name: zsh
     state: present
@@ -7,37 +13,32 @@
 
 - block:
     - name: change user shell to zsh
-      vars:
-        username: "{{ ansible_user_id }}"
       user:
-        name: "{{ username }}"
+        name: "{{ item }}"
         shell: /bin/zsh
-  become: false
+      with_items:
+        - "{{ current_user.stdout }}"
+        - root
 
-- block:
-    - name: change root shell to zsh
-      vars:
-        username: "{{ ansible_user_id }}"
-      user:
-        name: "{{ username }}"
-        shell: /bin/zsh
+    - name: Download ohmyzsh installer
+      get_url:
+        url: https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh
+        dest: /tmp/zsh-installer.sh
+        mode: 755
+
+    - name: install ohmyzsh
+      command:
+        chdir: /tmp
+        cmd: ./zsh-installer.sh
+      register: installer_output
+      changed_when: "'folder already exists' not in installer_output.stdout"
+      failed_when: installer_output.rc == 1 and 'folder already exists' not in installer_output.stdout
+
+    - name: Remove the ohmyzsh installer
+      file:
+        path: /tmp/zsh-installer.sh
+        state: absent
   become: true
 
-- name: Download ohmyzsh installer
-  get_url:
-    url: https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh
-    dest: /tmp/zsh-installer.sh
-    mode: 755
-
-- name: install ohmyzsh
-  command:
-    chdir: /tmp
-    cmd: ./zsh-installer.sh
-  register: installer_output
-  changed_when: "'folder already exists' not in installer_output.stdout"
-  failed_when: installer_output.rc == 1 and 'folder already exists' not in installer_output.stdout
-
-- name: Remove the ohmyzsh installer
-  file:
-    path: /tmp/zsh-installer.sh
-    state: absent
+- name: Download zsh plugins
+  import_tasks: zsh_plugins.yml
