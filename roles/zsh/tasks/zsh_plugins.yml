@@ -59,8 +59,11 @@
   when: p10k.stat.islnk is not defined
   changed_when: p10k.stat.islnk is not defined
 
-- name: Add the zsh config
+- name: Add zsh config files
   copy:
-    src: .zshrc
-    dest: ~/.zshrc
+    src: "{{ item }}"
+    dest: ~/{{ item }}
     mode: 0644
+  with_items:
+    - .p10k.zsh
+    - .zshrc
