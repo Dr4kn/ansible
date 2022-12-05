@@ -1,0 +1,6 @@
+---
+- name: Configure zsh
+  hosts: local
+  become: false
+  roles:
+    - role: zsh
