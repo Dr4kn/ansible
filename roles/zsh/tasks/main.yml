@@ -42,3 +42,9 @@
 
 - name: Download zsh plugins
   import_tasks: zsh_plugins.yml
+
+- name: script to fix zsh history
+  copy:
+    src: zsh_history_fix
+    dest: ~/bin/zsh_history_fix
+    mode: 0777

@@ -3,4 +3,4 @@
   hosts: local
   become: false
   roles:
-    - role: zsh
+    - zsh
