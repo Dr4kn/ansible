@@ -44,7 +44,8 @@
   import_tasks: zsh_plugins.yml
 
 - name: script to fix zsh history
+  become: true
   copy:
     src: zsh_history_fix
-    dest: ~/bin/zsh_history_fix
+    dest: /usr/bin/zsh_history_fix
     mode: 0777
