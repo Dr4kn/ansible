@@ -4,3 +4,16 @@
     src: .gitconfig
     dest: ~/.gitconfig
     mode: 0664
+
+- name: IntelliJ vim config
+  copy:
+    src: .ideavimrc
+    dest: ~/.ideavimrc
+    mode: 0664
+
+- name: kensington trackball button switch as bin
+  copy:
+    src: kensington_trackball.bash
+    dest: /usr/bin/kensington_trackball
+    mode: 0751
+  register: trackball
