@@ -1,0 +1,38 @@
+[user]
+	email = servicesDrkn@gmail.com
+	name = Dr4kn
+[credential]
+	helper = store
+[safe]
+	directory = /home/adrian/Documents/Programming/ansible-config
+[init]
+	defaultBranch = main
+[core]
+	editor = vim
+
+[alias]
+	# graph view with pretty formating
+	graph = log --graph --pretty=format:'%C(yellow)%h%Cblue -%C(reset)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+	# lists all branches with formating
+	br = branch --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) %(color:green)(%(committerdate:relative)) [%(authorname)]' --sort=-committerdate 
+
+	s = status
+	# less verbose version of status
+	st = status -sb
+	co = checkout
+	cm = commit -m
+	save = !git add -A && git commit -m 'chore: commit save point' 
+	# e.g. cob main
+	cob = checkout -b
+	# e.g. del feature
+	del = branch -D
+	# removes the last commit from history
+	undo = reset HEAD~1 --mixed 
+	last = log -1 HEAD --stat
+	# removes all local changes
+	fuckit = reset --hard
+	done = push origin HEAD
+	ri = rebase -i
+
+[help]
+	autocorrect = 20

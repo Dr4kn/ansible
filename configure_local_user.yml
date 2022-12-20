@@ -4,3 +4,4 @@
   become: false
   roles:
     - zsh
+    - host_files

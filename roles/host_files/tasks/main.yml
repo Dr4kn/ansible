@@ -1,0 +1,6 @@
+---
+- name: change git config
+  copy:
+    src: .gitconfig
+    dest: ~/.gitconfig
+    mode: 0664
