@@ -22,10 +22,11 @@
 	# less verbose version of status
 	st = status -sb
 	co = checkout
+	check = co
 	cm = commit -m
 	save = !git add -A && git commit -m 'chore: commit save point' 
-	# e.g. cob main
-	cob = checkout -b
+	# e.g. br main -> creates branch and switches to it
+	br = checkout -b
 	# e.g. del feature
 	del = branch -D
 	# removes the last commit from history
