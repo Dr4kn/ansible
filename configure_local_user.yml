@@ -5,3 +5,4 @@
   roles:
     - zsh
     - host_files
+    - xbox_controller_firmware
