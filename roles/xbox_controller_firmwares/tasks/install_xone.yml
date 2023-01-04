@@ -1,0 +1,44 @@
+---
+- name: Install required packages
+  become: true
+  package:
+    name:
+      - cabextract
+      - dkms
+    state: present
+
+- name: Check if xone is installed
+  stat:
+    path: /tmp/xone
+  register: xone_installed
+
+- name: Clone xone repo into tmp folder
+  git:
+    repo: https://github.com/medusalix/xone
+    dest: /tmp/xone
+    version: master
+    depth: 1
+  when: xone_installed.stat.islnk is not defined
+  changed_when: xone_installed.stat.islnk is not defined
+
+- name: Install xone
+  become: true
+  command:
+    chdir: /tmp/xone
+    cmd: ./install.sh --release
+  register: xone_output
+  changed_when: xone_output.rc == 0
+    and "Installing xone" in xone_output.stdout
+  failed_when: xone_output.rc == 1
+    and "Driver is already installed" not in xone_output.stderr
+
+- name: Install wireless dongle firmware
+  become: true
+  command:
+    cmd: xone-get-firmware.sh --skip-disclaimer
+  register: xone_dongle
+  changed_when: xone_dongle.rc == 0
+    and "All done, no errors" in xone_dongle.stdout
+  failed_when: xone_dongle.rc == 1
+  # how to pair the controller to the dongle
+  # https://support.xbox.com/en-US/help/hardware-network/controller/connect-xbox-wireless-controller-to-pc
