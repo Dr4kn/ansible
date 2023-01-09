@@ -5,11 +5,17 @@
     dest: ~/.gitconfig
     mode: 0664
 
+- name: vim config
+  copy:
+    src: .vimrc
+    dest: ~/.vimrc
+    mode: 0664
+
 - name: IntelliJ vim config
   copy:
-    src: .ideavimrc
+    src: ~/.vimrc
     dest: ~/.ideavimrc
-    mode: 0664
+    state: link
 
 - name: kensington trackball button switch as bin
   copy:
