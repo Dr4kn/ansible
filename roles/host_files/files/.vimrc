@@ -153,7 +153,11 @@ call plug#begin('~/.vim/plugged')
 " does as the name implies
 Plug 'machakann/vim-highlightedyank'
 
-" Usage: cs<from><to>, ds<from><to>, ys<from><to>, S<from><to>
+" Usage: 
+"   change cs<from><to>, 
+"   delete ds<from><to>, 
+"   add ys<from><to>, 
+"   add in Visual Mode S<from><to>
 Plug 'tpope/vim-surround'
 
 " Comment out / in code in normal mode
