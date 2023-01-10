@@ -4,6 +4,16 @@
 map <Space> <Leader>
 " relative line number
 set relativenumber
+" increase undo limit
+set history=1000
+" Confirm closing of unsaved file
+set Confirm
+" undo even when file was closed
+set undodir=~/.vim/.undo//
+" a copy of the file when you opened it
+set backupdir=~/.vim/.backup//
+" contains unsaved changes
+set directory=~/.vim/.swp//
 
 " SEARCH
 
