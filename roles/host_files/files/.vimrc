@@ -1,18 +1,38 @@
-" yank to global clipboard
-set clipboard=unnamedplus
+" GENERAL
+
+" change <Leader>  to space
+map <Space> <Leader>
 " relative line number
 set relativenumber
+
+" SEARCH
+
 " ignore case when searching
 set ignorecase
-" Show matchin brackets when indicator is over them
-set showmatch
+" replace words while keeping original upper/lowercase style
+set smartcase
 " Hom many tenths of a second to blink when matching brackets
 set mat=2
-" syntax highlighting
-set syntax
 " Set regular expression engine automatically
 set regexpengine=0
+" Show current mode in last line
+set showmode
+" Show the partially typed command on the last line
+set showcmd
+" Show matching words during a search
+set showmatch
+" Highly while searching
+set hlsearch
+" searches while typing
+set incsearch
 
+
+" HIGHLIGHTING
+
+" Wrap text that goes beyond the screen length
+set wrap
+" syntax highlighting
+set syntax
 " Enable 256 colors palette in Gnome Terminal
 if $COLORTERM == 'gnome-terminal'
     set t_Co=256
@@ -22,6 +42,59 @@ try
 catch
 endtry
 
+
+" STATUS LINE
+
+" From https://gist.github.com/meskarune/57b613907ebd1df67eb7bdb83c6e6641
+" theme status bar 
+au InsertEnter * hi statusline guifg=black guibg=#d7afff ctermfg=black ctermbg=magenta
+au InsertLeave * hi statusline guifg=black guibg=#8fbfdc ctermfg=black ctermbg=cyan
+hi statusline guifg=black guibg=#8fbfdc ctermfg=black ctermbg=cyan
+
+let g:currentmode={
+    \ 'n'  : 'Normal',
+    \ 'no' : 'Normal·Operator Pending',
+    \ 'v'  : 'Visual',
+    \ 'V'  : 'V·Line',
+    \ '^V' : 'V·Block',
+    \ 's'  : 'Select',
+    \ 'S'  : 'S·Line',
+    \ '^S' : 'S·Block',
+    \ 'i'  : 'Insert',
+    \ 'R'  : 'Replace',
+    \ 'Rv' : 'V·Replace',
+    \ 'c'  : 'Command',
+    \ 'cv' : 'Vim Ex',
+    \ 'ce' : 'Ex',
+    \ 'r'  : 'Prompt',
+    \ 'rm' : 'More',
+    \ 'r?' : 'Confirm',
+    \ '!'  : 'Shell',
+    \ 't'  : 'Terminal'
+    \}
+
+" Show status bar
+set laststatus=2
+set noshowmode
+set statusline=
+set statusline+=%0*\ %n\                                 " Buffer number
+set statusline+=%1*\ %<%f%m%r%h%w\                       " relative File path, modified, readonly, helpfile, preview
+set statusline+=%3*│                                     " Separator
+set statusline+=%2*\ %Y\                                 " FileType
+set statusline+=%3*│                                     " Separator
+set statusline+=%2*\ %{''.(&fenc!=''?&fenc:&enc).''}     " Encoding
+set statusline+=\ (%{&ff})                               " FileFormat (dos/unix..)
+set statusline+=%=                                       " Right Side
+set statusline+=%2*\ col:\ %02v\                         " Colomn number
+set statusline+=%3*│                                     " Separator
+set statusline+=%1*\ ln:\ %02l/%L\ (%3p%%)\              " Line number / total lines, percentage of document
+set statusline+=%0*\ %{toupper(g:currentmode[mode()])}\  " The current mode
+
+hi User1 ctermfg=007 ctermbg=239 guibg=#4e4e4e guifg=#adadad
+hi User2 ctermfg=007 ctermbg=236 guibg=#303030 guifg=#adadad
+hi User3 ctermfg=236 ctermbg=236 guibg=#303030 guifg=#303030
+hi User4 ctermfg=239 ctermbg=239 guibg=#4e4e4e guifg=#4e4e4e
+
 " Use spaces instead of tabs
 set expandtab
 " indents further with tabs depending on context
@@ -29,15 +102,55 @@ set smarttab
 " 1 tab == 4 spaces
 set shiftwidth=4
 set tabstop=4
+set softtabstop=4
 
+" yank to global clipboard
+set clipboard=unnamedplus
+" copy paste to x11 mouse selection which can be pasted by the middle mouse button
 noremap <Leader>y "*y
 noremap <Leader>p "*p
+" copy paste to desktop clipboard
 noremap <Leader>Y "+y
 noremap <Leader>P "+p
+" Copy from cursor to the end of line.
+nnoremap Y y$
+
+
+" move cursor in the middle of the screen
 noremap <C-d> <C-d>zz
 noremap <C-u> <C-u>zz
+" Center the cursor vertically when moving to the next word during a search.
+nnoremap n nzz
+nnoremap N Nzz
 
 " Visual mode pressing * or # searches for the current selection
 " Super useful! From an idea by Michael Naumann
 vnoremap <silent> * :<C-u>call VisualSelection('', '')<CR>/<C-R>=@/<CR><CR>
 vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
+
+
+" PLUGINS
+
+" if plug.vim isn't installed install it
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+call plug#begin('~/.vim/plugged')
+
+" does as the name implies
+Plug 'machakann/vim-highlightedyank'
+
+" Usage: cs<from><to>, ds<from><to>, ys<from><to>, S<from><to>
+Plug 'tpope/vim-surround'
+
+" Comment out / in code in normal mode
+" Usage: 
+"   gcc Comment current line
+"   gc + motion: Comment with motion
+"   gc Comment selected text
+Plug 'tpope/vim-commentary'
+
+call plug#end()

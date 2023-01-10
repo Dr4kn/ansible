@@ -11,11 +11,16 @@
     dest: ~/.vimrc
     mode: 0664
 
+- name: check if vimrc link already existsts
+  stat: path=~/.vimrc
+  register: link
+
 - name: IntelliJ vim config
   copy:
     src: ~/.vimrc
     dest: ~/.ideavimrc
     state: link
+  when: link.stat.islnk is defined and link.stat.islnk
 
 - name: kensington trackball button switch as bin
   copy:
