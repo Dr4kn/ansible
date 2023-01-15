@@ -5,6 +5,16 @@
     dest: ~/.gitconfig
     mode: 0664
 
+- name: Create for vim a backup, swap and undo directorie if they don't exist
+  file:
+    path: ~/.vim/{{ item }}
+    state: directory
+    mode: "0775"
+  with_items:
+    - .backup
+    - .swp
+    - .undo
+
 - name: vim config
   copy:
     src: .vimrc
