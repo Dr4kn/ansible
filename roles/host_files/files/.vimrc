@@ -6,8 +6,6 @@ map <Space> <Leader>
 set relativenumber
 " increase undo limit
 set history=1000
-" Confirm closing of unsaved file
-set Confirm
 " undo even when file was closed
 set undodir=~/.vim/.undo//
 " a copy of the file when you opened it
@@ -126,7 +124,7 @@ noremap <Leader>P "+p
 nnoremap Y y$
 
 
-" move cursor in the middle of the screen
+" go half a screen up or down and move cursor in the middle of the screen
 noremap <C-d> <C-d>zz
 noremap <C-u> <C-u>zz
 " Center the cursor vertically when moving to the next word during a search.
@@ -142,9 +140,9 @@ vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
 " PLUGINS
 
 " if plug.vim isn't installed install it
-if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
+if empty(glob(data_dir . '/autoload/plug.vim'))
+  silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
