@@ -1,4 +1,0 @@
----
-# https://github.com/medusalix/xone
-- name: update xone
-  import_tasks: update_xone.yml

@@ -1,7 +1,0 @@
-- name: Uninstall xone
-  become: true
-  command:
-    chdir: /tmp/xone
-    cmd: ./uninstall.sh
-  register: xone_uninstall
-  changed_when: xone_uninstall.rc == 0
