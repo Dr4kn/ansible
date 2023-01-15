@@ -5,33 +5,6 @@
     dest: ~/.gitconfig
     mode: 0664
 
-- name: Create for vim a backup, swap and undo directorie if they don't exist
-  file:
-    path: ~/.vim/{{ item }}
-    state: directory
-    mode: "0775"
-  with_items:
-    - .backup
-    - .swp
-    - .undo
-
-- name: vim config
-  copy:
-    src: .vimrc
-    dest: ~/.vimrc
-    mode: 0664
-
-- name: check if vimrc link already existsts
-  stat: path=~/.vimrc
-  register: link
-
-- name: IntelliJ vim config
-  copy:
-    src: ~/.vimrc
-    dest: ~/.ideavimrc
-    state: link
-  when: link.stat.islnk is defined and link.stat.islnk
-
 - name: kensington trackball button switch as bin
   copy:
     src: kensington_trackball.bash
@@ -39,3 +12,6 @@
     mode: 0751
   register: trackball
   become: true
+
+- name: install vim and add all the configuration
+  import_tasks: vim.yml
