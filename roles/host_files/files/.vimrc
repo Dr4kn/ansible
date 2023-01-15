@@ -12,27 +12,10 @@ set undodir=~/.vim/.undo//
 set backupdir=~/.vim/.backup//
 " contains unsaved changes
 set directory=~/.vim/.swp//
+" go half a screen up or down and move cursor in the middle of the screen
+noremap <C-d> <C-d>zz
+noremap <C-u> <C-u>zz
 
-" SEARCH
-
-" ignore case when searching
-set ignorecase
-" replace words while keeping original upper/lowercase style
-set smartcase
-" Hom many tenths of a second to blink when matching brackets
-set mat=2
-" Set regular expression engine automatically
-set regexpengine=0
-" Show current mode in last line
-set showmode
-" Show the partially typed command on the last line
-set showcmd
-" Show matching words during a search
-set showmatch
-" Highly while searching
-set hlsearch
-" searches while typing
-set incsearch
 
 
 " HIGHLIGHTING
@@ -49,6 +32,7 @@ try
     colorscheme desert
 catch
 endtry
+
 
 
 " STATUS LINE
@@ -98,10 +82,15 @@ set statusline+=%3*│                                     " Separator
 set statusline+=%1*\ ln:\ %02l/%L\ (%3p%%)\              " Line number / total lines, percentage of document
 set statusline+=%0*\ %{toupper(g:currentmode[mode()])}\  " The current mode
 
+" colors for the statusbar blocks
 hi User1 ctermfg=007 ctermbg=239 guibg=#4e4e4e guifg=#adadad
 hi User2 ctermfg=007 ctermbg=236 guibg=#303030 guifg=#adadad
 hi User3 ctermfg=236 ctermbg=236 guibg=#303030 guifg=#303030
 hi User4 ctermfg=239 ctermbg=239 guibg=#4e4e4e guifg=#4e4e4e
+
+
+
+" INDENTATION
 
 " Use spaces instead of tabs
 set expandtab
@@ -111,6 +100,10 @@ set smarttab
 set shiftwidth=4
 set tabstop=4
 set softtabstop=4
+
+
+
+" COPY PASTE
 
 " yank to global clipboard
 set clipboard=unnamedplus
@@ -124,17 +117,49 @@ noremap <Leader>P "+p
 nnoremap Y y$
 
 
-" go half a screen up or down and move cursor in the middle of the screen
-noremap <C-d> <C-d>zz
-noremap <C-u> <C-u>zz
+
+" SEARCHING
+
+" Visual mode pressing * searches for the current selection
+" Super useful! From an idea by Michael Naumann
+function! s:getSelectedText()
+  let l:old_reg = getreg('"')
+  let l:old_regtype = getregtype('"')
+  norm gvy
+  let l:ret = getreg('"')
+  call setreg('"', l:old_reg, l:old_regtype)
+  exe "norm \<Esc>"
+  return l:ret
+endfunction
+
+vnoremap <silent> * :call setreg("/",
+    \ substitute(<SID>getSelectedText(),
+    \ '\_s\+',
+    \ '\\_s\\+', 'g')
+    \ )<Cr>n
+
 " Center the cursor vertically when moving to the next word during a search.
 nnoremap n nzz
 nnoremap N Nzz
+" ignore case when searching
+set ignorecase
+" replace words while keeping original upper/lowercase style
+set smartcase
+" Hom many tenths of a second to blink when matching brackets
+set mat=2
+" Set regular expression engine automatically
+set regexpengine=0
+" Show current mode in last line
+set showmode
+" Show the partially typed command on the last line
+set showcmd
+" Show matching words during a search
+set showmatch
+" Highly while searching
+set hlsearch
+" searches while typing
+set incsearch
 
-" Visual mode pressing * or # searches for the current selection
-" Super useful! From an idea by Michael Naumann
-vnoremap <silent> * :<C-u>call VisualSelection('', '')<CR>/<C-R>=@/<CR><CR>
-vnoremap <silent> # :<C-u>call VisualSelection('', '')<CR>?<C-R>=@/<CR><CR>
 
 
 " PLUGINS
@@ -149,11 +174,13 @@ endif
 call plug#begin('~/.vim/plugged')
 
 " does as the name implies
-Plug 'machakann/vim-highlightedyank'
+Plug 'machakann/vim-highwlightedyank'
+" indefinite highlight duration
+let g:highlightedyank_highlight_duration = -1
 
 " Usage: 
 "   change cs<from><to>, 
-"   delete ds<from><to>, 
+"   delete ds<to>, 
 "   add ys<from><to>, 
 "   add in Visual Mode S<from><to>
 Plug 'tpope/vim-surround'
@@ -164,5 +191,12 @@ Plug 'tpope/vim-surround'
 "   gc + motion: Comment with motion
 "   gc Comment selected text
 Plug 'tpope/vim-commentary'
+
+" highlight the first letter to move with f and t
+Plug 'unblevable/quick-scope'
+" Map the leader key + q to toggle quick-scope's highlighting in normal/visual mode.
+" Note that you must use nmap/xmap instead of their non-recursive versions (nnoremap/xnoremap).
+nmap <leader>q <plug>(QuickScopeToggle)
+xmap <leader>q <plug>(QuickScopeToggle)
 
 call plug#end()
