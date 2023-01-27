@@ -13,5 +13,11 @@
   register: trackball
   become: true
 
+- name: Create cron job that removes unused flatpak dependencies
+  cron:
+    name: "remove flatpak dependencies that aren't used anymore"
+    special_time: daily
+    job: "yes | flatpak uninstall --unused"
+
 - name: install vim and add all the configuration
   import_tasks: vim.yml
