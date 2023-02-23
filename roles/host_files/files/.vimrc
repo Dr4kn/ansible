@@ -39,8 +39,11 @@ endtry
 
 " From https://gist.github.com/meskarune/57b613907ebd1df67eb7bdb83c6e6641
 " theme status bar 
+" insert mode
 au InsertEnter * hi statusline guifg=black guibg=#d7afff ctermfg=black ctermbg=magenta
+" normal mode
 au InsertLeave * hi statusline guifg=black guibg=#8fbfdc ctermfg=black ctermbg=cyan
+" visual mode
 hi statusline guifg=black guibg=#8fbfdc ctermfg=black ctermbg=cyan
 
 let g:currentmode={
@@ -198,5 +201,9 @@ Plug 'unblevable/quick-scope'
 " Note that you must use nmap/xmap instead of their non-recursive versions (nnoremap/xnoremap).
 nmap <leader>q <plug>(QuickScopeToggle)
 xmap <leader>q <plug>(QuickScopeToggle)
+
+" theme
+Plug 'morhetz/gruvbox'
+autocmd vimenter * ++nested colorscheme gruvbox
 
 call plug#end()

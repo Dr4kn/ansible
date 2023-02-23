@@ -20,13 +20,13 @@
     dest: ~/.vimrc
     mode: 0664
 
-- name: check if vimrc link already existsts
-  stat: path=~/.vimrc
+- name: check if ideavimrc link already existsts
+  stat: path=~/.ideavimrc
   register: link
 
 - name: IntelliJ vim config
-  copy:
+  file:
     src: ~/.vimrc
     dest: ~/.ideavimrc
     state: link
-  when: link.stat.islnk is defined and link.stat.islnk
+  when: link.stat.islnk is not defined
