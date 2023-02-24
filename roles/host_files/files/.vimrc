@@ -15,6 +15,8 @@ set directory=~/.vim/.swp//
 " go half a screen up or down and move cursor in the middle of the screen
 noremap <C-d> <C-d>zz
 noremap <C-u> <C-u>zz
+" disable: <Press ENTER or type command to continue> message
+set shortmess=a
 
 
 
@@ -203,7 +205,7 @@ nmap <leader>q <plug>(QuickScopeToggle)
 xmap <leader>q <plug>(QuickScopeToggle)
 
 " theme
-Plug 'morhetz/gruvbox'
-autocmd vimenter * ++nested colorscheme gruvbox
+" Plug 'morhetz/gruvbox'
+" autocmd vimenter * ++nested colorscheme gruvbox
 
 call plug#end()
