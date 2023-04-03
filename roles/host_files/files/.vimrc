@@ -162,6 +162,8 @@ set showcmd
 set showmatch
 " Highly while searching
 set hlsearch
+" Press leader key + / to turn of the search hightling until the next one
+:map <Leader>h :noh<CR>
 " searches while typing
 set incsearch
 
@@ -203,9 +205,5 @@ Plug 'unblevable/quick-scope'
 " Note that you must use nmap/xmap instead of their non-recursive versions (nnoremap/xnoremap).
 nmap <leader>q <plug>(QuickScopeToggle)
 xmap <leader>q <plug>(QuickScopeToggle)
-
-" theme
-" Plug 'morhetz/gruvbox'
-" autocmd vimenter * ++nested colorscheme gruvbox
 
 call plug#end()
