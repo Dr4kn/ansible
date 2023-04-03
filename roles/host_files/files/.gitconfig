@@ -17,6 +17,7 @@
 	lg1 = lg
 	lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n%C(white)%s%C(reset) %C(dim white) - %an%C(reset)' --all
 	lg3 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset) %C(bold cyan)(committed: %cD)%C(reset) %C(auto)%d%C(reset)%n%C(white)%s%C(reset)%n%C(dim white)- %an <%ae> %C(reset) %C(dim white)(committer: %cn <%ce>)%C(reset)'
+	ls = lg # don't ask
 
 	s = status
 	# less verbose version of status
@@ -30,12 +31,18 @@
 	# e.g. del feature
 	del = branch -D
 	# removes the last commit from history
-	undo = reset HEAD~1 --mixed 
+	undo = reset HEAD~1 --mixed
+	# shows the changes of the last commit
 	last = log -1 HEAD --stat
 	# removes all local changes
 	fuckit = reset --hard
 	done = push origin HEAD
 	ri = rebase -i
+
+	# remove file or directory from staging
+	unstage = reset HEAD -- 
+	rs = unstage
+	us = unstage
 
 [help]
 	autocorrect = 20
