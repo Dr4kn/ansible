@@ -5,7 +5,7 @@
     upgrade: true
 
 - name: Install packages that ansible uses
-  apt:
+  package:
     name:
       - sshpass
       - aptitude
