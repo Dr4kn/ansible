@@ -1,0 +1,37 @@
+---
+# https://github.com/flathub/com.github.Matoking.protontricks
+# used at the moment for ksp2 modding https://docs.bepinex.dev/articles/advanced/proton_wine.html
+- name: Install protontricks as flatpak
+  flatpak:
+    name: com.github.Matoking.protontricks
+    state: present
+
+- name: Get current user
+  command: whoami
+  register: current_user
+  changed_when: current_user.rc == 0
+
+- name: Detect user shell
+  set_fact:
+    shell: ".{{ ansible_env.SHELL.split('/')|last }}rc"
+  when: ansible_env.SHELL == '/bin/bash' or ansible_env.SHELL == '/bin/zsh'
+
+- name: Add protontricks alias for current user
+  lineinfile:
+    path: /home/{{ current_user.stdout }}/{{ shell }}
+    line: alias protontricks='flatpak run com.github.Matoking.protontricks'
+    owner: "{{ current_user.stdout }}"
+    regexp: r"^alias protontricks='flatpak run com.github.Matoking.protontricks'$"
+    state: present
+    create: true
+    mode: "0733"
+
+- name: Add protontricks-launch alias for current user
+  lineinfile:
+    path: /home/{{ current_user.stdout }}/{{ shell }}
+    line: alias protontricks-launch='flatpak run --command=protontricks-launch com.github.Matoking.protontricks'
+    owner: "{{ current_user.stdout }}"
+    regexp: r"alias protontricks-launch='flatpak run --command=protontricks-launch com.github.Matoking.protontricks'"
+    state: present
+    create: true
+    mode: "0733"
