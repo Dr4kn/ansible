@@ -30,6 +30,7 @@
 	br = checkout -b
 	# e.g. del feature
 	del = branch -D
+	dl = branch -D
 	# removes the last commit from history
 	undo = reset HEAD~1 --mixed
 	# shows the changes of the last commit
