@@ -1,69 +1,88 @@
 ---
 # plugins
-- name: Check if zsh-autosuggestions is installed
-  stat:
-    path: ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
-  register: suggestion_installed
+- name: Get current user
+  command: whoami
+  register: current_user
+  changed_when: current_user.rc == 0
 
-- name: Clone zsh-autosuggestions in zsh plugins folder
-  git:
-    repo: https://github.com/zsh-users/zsh-autosuggestions
-    dest: ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
-    version: master
-    depth: 1
-  when: suggestion_installed.stat.islnk is not defined
-  changed_when: suggestion_installed.stat.islnk is not defined
+- block:
+    - name: Check if zsh-autosuggestions is installed
+      stat:
+        path: "/home/{{ current_user.stdout }}/.oh-my-zsh/custom/plugins/zsh-autosuggestions"
+      register: suggestion_installed
 
-- name: Check if k is installed
-  stat:
-    path: ~/.oh-my-zsh/custom/plugins/k
-  register: k_installed
+    - name: Clone zsh-autosuggestions in zsh plugins folder
+      git:
+        repo: https://github.com/zsh-users/zsh-autosuggestions
+        dest: "{{ item }}/.oh-my-zsh/custom/plugins/zsh-autosuggestions"
+        version: master
+        depth: 1
+      with_items:
+        - "/home/{{ current_user.stdout }}"
+        - /root
+      when: suggestion_installed.stat.islnk is not defined
+      changed_when: suggestion_installed.stat.islnk is not defined
 
-- name: Clone k in zsh plugins folder
-  git:
-    repo: https://github.com/supercrabtree/k
-    dest: ~/.oh-my-zsh/custom/plugins/k
-    version: master
-    depth: 1
-  when: k.stat.islnk is not defined
-  changed_when: k.stat.islnk is not defined
+    - name: Check if k is installed
+      stat:
+        path: "/home/{{ current_user.stdout }}/.oh-my-zsh/custom/plugins/k"
+      register: k_installed
 
-- name: Check if syntax-highlighting is installed
-  stat:
-    path: ~/.oh-my-zsh/custom/plugins/syntax-highlighting
-  register: syntax
+    - name: Clone k in zsh plugins folder
+      git:
+        repo: https://github.com/supercrabtree/k
+        dest: "{{ item }}/.oh-my-zsh/custom/plugins/k"
+        version: master
+        depth: 1
+      with_items:
+        - "/home/{{ current_user.stdout }}"
+        - /root
+      when: k.stat.islnk is not defined
+      changed_when: k.stat.islnk is not defined
 
-- name: Clone zsh-syntax-highlighting in zsh plugins folder
-  git:
-    repo: https://github.com/zsh-users/zsh-syntax-highlighting
+    - name: Check if syntax-highlighting is installed
+      stat:
+        path: "/home/{{ current_user.stdout }}/.oh-my-zsh/custom/plugins/syntax-highlighting"
+      register: syntax
 
-    dest: ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
-    version: master
-    depth: 1
-  when: syntax.stat.islnk is not defined
-  changed_when: syntax.stat.islnk is not defined
+    - name: Clone zsh-syntax-highlighting in zsh plugins folder
+      git:
+        repo: https://github.com/zsh-users/zsh-syntax-highlighting
 
-# Themes
+        dest: "{{ item }}/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting"
+        version: master
+        depth: 1
+      with_items:
+        - "/home/{{ current_user.stdout }}"
+        - /root
+      when: syntax.stat.islnk is not defined
+      changed_when: syntax.stat.islnk is not defined
 
-- name: Check if powerlevel10k is installed
-  stat:
-    path: ~/.oh-my-zsh/custom/themes/powerlevel10k
-  register: p10k
+    # Themes
 
-- name: Clone powerlevel10k in zsh plugins folder
-  git:
-    repo: https://github.com/romkatv/powerlevel10k
-    dest: ~/.oh-my-zsh/custom/themes/powerlevel10k
-    version: master
-    depth: 1
-  when: p10k.stat.islnk is not defined
-  changed_when: p10k.stat.islnk is not defined
+    - name: Check if powerlevel10k is installed
+      stat:
+        path: "/home/{{ current_user.stdout }}/.oh-my-zsh/custom/themes/powerlevel10k"
+      register: p10k
 
-- name: Add zsh config files
-  copy:
-    src: "{{ item }}"
-    dest: ~/{{ item }}
-    mode: 0644
-  with_items:
-    - .p10k.zsh
-    - .zshrc
+    - name: Clone powerlevel10k in zsh plugins folder
+      git:
+        repo: https://github.com/romkatv/powerlevel10k
+        dest: "{{ item }}/.oh-my-zsh/custom/themes/powerlevel10k"
+        version: master
+        depth: 1
+      with_items:
+        - "/home/{{ current_user.stdout }}"
+        - /root
+      when: p10k.stat.islnk is not defined
+      changed_when: p10k.stat.islnk is not defined
+
+    - name: Add zsh config files
+      copy:
+        src: .p10k.zsh
+        dest: "{{ item  }}/.p10k.zsh"
+        mode: 0644
+      with_items:
+        - "/home/{{ current_user.stdout }}"
+        - /root
+  become: true

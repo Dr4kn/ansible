@@ -6,10 +6,9 @@
 
 - name: Install zsh
   become: true
-  apt:
+  package:
     name: zsh
     state: present
-    update_cache: true
 
 - block:
     - name: change user shell to zsh
@@ -19,6 +18,15 @@
       with_items:
         - "{{ current_user.stdout }}"
         - root
+
+    - name: add .zshrc config
+      copy:
+        src: .zshrc
+        dest: "{{ item }}/.zshrc"
+        mode: 0644
+      with_items:
+        - "/home/{{ current_user.stdout }}"
+        - /root
 
     - name: Download ohmyzsh installer
       get_url:
@@ -42,6 +50,9 @@
 
 - name: Download zsh plugins
   import_tasks: zsh_plugins.yml
+
+- name: Install recommended fonts
+  import_tasks: install_p10k_fonts.yml
 
 - name: script to fix zsh history
   become: true

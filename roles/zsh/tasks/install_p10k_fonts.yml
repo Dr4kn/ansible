@@ -1,0 +1,27 @@
+---
+- block:
+    - name: Download Powerlevel10k fonts
+      git:
+        repo: "https://github.com/romkatv/powerlevel10k-media.git"
+        dest: "/usr/share/fonts/powerlevel10k"
+        version: master
+        depth: 1
+        force: true # if it exists it is modified and ansible would fail
+
+    - name: Find all files except .ttf in powerlines folder
+      find:
+        paths: "/usr/share/fonts/powerlevel10k"
+        excludes: "*.ttf"
+      register: powerline_fonts
+
+    - name: Delete every file except .ttf in powerlines folder
+      file:
+        path: "{{ item.path }}"
+        state: absent
+      with_items: "{{ powerline_fonts.files }}"
+
+    - name: Update font cache
+      command: fc-cache -f -v
+      register: font_cache
+      changed_when: font_cache.rc == 0
+  become: true
