@@ -1,5 +1,0 @@
----
-- name: Uninstall xone
-  import_tasks: uninstall_xone.yml
-- name: Reinstall xone
-  import_tasks: install_xone.yml

@@ -4,4 +4,5 @@
     chdir: /tmp/xone
     cmd: ./uninstall.sh
   register: xone_uninstall
+  when: xone_uninstall.rc is defined # checks if it is already installed
   changed_when: xone_uninstall.rc == 0

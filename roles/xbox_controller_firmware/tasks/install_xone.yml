@@ -1,4 +1,8 @@
 ---
+# for updates the old one has to be deleted first
+- name: Uninstall xone
+  import_tasks: uninstall_xone.yml
+
 - name: Install required packages
   become: true
   package:
