@@ -1,0 +1,44 @@
+---
+- block:
+    - name: Update packages
+      apt:
+        update_cache: true
+        upgrade: true
+
+    - name: Install packages
+      package:
+        name:
+          - flatpak
+          - git
+          - openjdk-19-jre
+          - openjdk-11-jre
+        state: present
+  become: true
+
+- name: Add the flathub flatpak repository remote to the user installation
+  community.general.flatpak_remote:
+    name: flathub
+    state: present
+    flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
+    method: system
+
+- name: Install flatpaks
+  flatpak:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - com.valvesoftware.Steam
+    - com.spotify.Client
+    - org.mozilla.firefox
+    - org.onlyoffice.desktopeditors
+    - org.gimp.GIMP
+    - com.bitwarden.desktop
+    - md.obsidian.Obsidian
+    - com.calibre_ebook.calibre
+    - org.flameshot.Flameshot
+    - io.mpv.Mpv
+    - io.github.celluloid_player.Celluloid
+    - org.videolan.VLC
+    - org.kicad.KiCad
+    - net.ankiweb.Anki
+    - de.haeckerfelix.Fragments

@@ -21,3 +21,9 @@
 
 - name: install vim and add all the configuration
   import_tasks: vim.yml
+
+- name: install the fonts I use
+  import_tasks: install_fonts.yml
+
+- name: install programs I use
+  import_tasks: install_programs.yml
