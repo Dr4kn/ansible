@@ -20,12 +20,13 @@
     name: flathub
     state: present
     flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
-    method: system
+    method: user
 
 - name: Install flatpaks
   flatpak:
     name: "{{ item }}"
     state: present
+    method: user
   with_items:
     - com.valvesoftware.Steam
     - com.spotify.Client
