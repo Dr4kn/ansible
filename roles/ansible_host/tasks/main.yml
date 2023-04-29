@@ -3,6 +3,7 @@
   apt:
     update_cache: true
     upgrade: true
+  become: true
 
 - name: Install packages that ansible uses
   package:
@@ -13,11 +14,17 @@
       - ansible-lint
       - python3-pip
       - python3-apt
+      - yamllint
     state: present
+  become: true
 
-- name: Install pexpect
+- name: Install pip modules that ansible uses
   pip:
-    name: pexpect
+    name:
+      - pexpect
+      - virtualenv
+      - ansible-lint
+      - setuptools
 
 - name: Install ansible_galaxy packages # to be able to to install ansible galaxy packages with ansible
   command: "ansible-galaxy collection install {{ item }}"
