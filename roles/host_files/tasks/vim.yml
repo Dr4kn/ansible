@@ -4,7 +4,7 @@
     name: vim
     state: present
 
-- name: Create for vim a backup, swap and undo directorie if they don't exist
+- name: Create for vim a backup, swap and undo directory if they don't exist
   file:
     path: ~/.vim/{{ item }}
     state: directory
