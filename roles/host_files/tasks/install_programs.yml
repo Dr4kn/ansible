@@ -12,6 +12,9 @@
           - git
           - openjdk-19-jre
           - openjdk-11-jre
+          - neofetch
+          - vim
+          - gnome-extensions-app
         state: present
   become: true
 
@@ -43,3 +46,4 @@
     - org.kicad.KiCad
     - net.ankiweb.Anki
     - de.haeckerfelix.Fragments
+    - org.chromium.Chromium
