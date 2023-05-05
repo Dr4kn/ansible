@@ -206,4 +206,9 @@ Plug 'unblevable/quick-scope'
 nmap <leader>q <plug>(QuickScopeToggle)
 xmap <leader>q <plug>(QuickScopeToggle)
 
+
+" adds rainbow brackets to vim
+Plug 'frazrepo/vim-rainbow'
+let g:rainbow_active = 1
+
 call plug#end()
