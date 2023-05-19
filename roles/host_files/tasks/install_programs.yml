@@ -47,3 +47,20 @@
     - net.ankiweb.Anki
     - de.haeckerfelix.Fragments
     - org.chromium.Chromium
+
+# curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash - &&\
+# sudo apt-get install -y nodejs
+
+- block:
+    - name: install angular globally
+      npm:
+        name: "@angular/cli"
+        global: true
+        state: present
+
+    - name: install gtop globally
+      npm:
+        name: gtop
+        global: true
+        state: present
+  become: true
