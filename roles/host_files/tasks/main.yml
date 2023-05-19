@@ -27,3 +27,6 @@
 
 - name: install programs I use
   import_tasks: install_programs.yml
+
+- name: install input remapper and configure it
+  import_tasks: install_input-remapper.yml

@@ -1,0 +1,12 @@
+{
+    "mapping": {
+        "1,275,1": [
+            "BTN_MIDDLE",
+            "mouse"
+        ],
+        "1,274,1": [
+            "BTN_SIDE",
+            "mouse"
+        ]
+    }
+}
