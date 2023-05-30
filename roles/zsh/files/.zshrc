@@ -18,9 +18,23 @@ plugins=(
 	zsh-autosuggestions
 	zsh-syntax-highlighting
 	k
+	fast-syntax-highlighting
+	zsh-autocomplete
 )
 
 source $ZSH/oh-my-zsh.sh
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# ZSH AUTOCOMPLETE
+# First autocomplete common strings and then show the menu:
+# all Tab widgets
+zstyle ':autocomplete:*complete*:*' insert-unambiguous yes
+# all history widgets
+zstyle ':autocomplete:*history*:*' insert-unambiguous yes
+# ^S
+zstyle ':autocomplete:menu-search:*' insert-unambiguous yes
+
+# Enter submits straight to the command line
+bindkey -M menuselect '\r' .accept-line
