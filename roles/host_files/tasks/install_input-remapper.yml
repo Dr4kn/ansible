@@ -19,7 +19,7 @@
 - name: trackball config
   copy:
     src: kensington_trackball_button_switch.json
-    dest: ~/.config/input-remapper/presets/"Kensington Expert Wireless TB Mouse"/kensington_trackball_button_switch.json
+    dest: "~/.config/input-remapper/presets/Kensington Expert Wireless TB Mouse/kensington_trackball_button_switch.json"
     mode: 0664
 
 - name: load input input-remapper
