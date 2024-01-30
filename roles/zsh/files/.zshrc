@@ -38,3 +38,12 @@ zstyle ':autocomplete:menu-search:*' insert-unambiguous yes
 
 # Enter submits straight to the command line
 bindkey -M menuselect '\r' .accept-line
+
+# Docker Alias
+# Docker Alias
+alias dcl="docker compose logs"
+alias dcu="docker compose up"
+alias dcud="docker compose up -d"
+alias dcd="docker compose down"
+alias dcdv="docker compose down -v"
+k
