@@ -4,5 +4,5 @@
   become: false
   roles:
     - zsh
-    - host_files
+    - desktop_specific
     - xbox_controller_firmware
