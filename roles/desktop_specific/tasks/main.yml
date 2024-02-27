@@ -21,3 +21,6 @@
 
 - name: install input remapper and configure it
   import_tasks: install_input-remapper.yml
+
+- name: install wezterm and copy the config over
+  import_tasks: install_wezterm.yml

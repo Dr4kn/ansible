@@ -2,6 +2,7 @@
 - name: Configure zsh
   hosts: local
   become: false
+  gather_facts: true
   roles:
     - zsh
     - desktop_specific
