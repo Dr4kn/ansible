@@ -6,20 +6,6 @@
     version: main
     depth: 1
 
-- name: Extract Comic Code to fonts
-  unarchive:
-    src: "/tmp/ansible-private-files/Comic Code Coding Essentials (no Ligatures).zip"
-    dest: /usr/share/fonts
-    remote_src: true
-  become: true
-
-- name: Copy Qdbettercomicsans to fonts
-  copy:
-    src: /tmp/ansible-private-files/Qdbettercomicsans
-    dest: /usr/share/fonts
-    mode: 0755
-  become: true
-
 - name: Update font cache
   command: fc-cache -f -v
   register: font_cache

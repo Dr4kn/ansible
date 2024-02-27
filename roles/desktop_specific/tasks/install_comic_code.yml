@@ -1,0 +1,13 @@
+---
+# it's paid and therefore in a private repo
+- name: Extract Comic Code to fonts
+  unarchive:
+    src: "/tmp/ansible-private-files/Comic Code Coding Essentials (no Ligatures).zip"
+    dest: /usr/share/fonts
+    remote_src: true
+  become: true
+
+- name: Update font cache
+  command: fc-cache -f -v
+  register: font_cache
+  changed_when: font_cache.rc == 0

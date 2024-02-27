@@ -1,0 +1,23 @@
+---
+- name: kensington trackball button switch as bin
+  copy:
+    src: kensington_trackball.bash
+    dest: /usr/bin/kensington_trackball
+    mode: 0751
+  register: trackball
+  become: true
+
+- name: Create cron job that removes unused flatpak dependencies
+  cron:
+    name: "remove flatpak dependencies that aren't used anymore"
+    special_time: daily
+    job: "yes | flatpak uninstall --unused"
+
+- name: install my preferred paid programming font
+  import_tasks: install_comic_code.yml
+
+- name: install programs I use
+  import_tasks: install_programs.yml
+
+- name: install input remapper and configure it
+  import_tasks: install_input-remapper.yml
