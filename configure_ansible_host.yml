@@ -1,5 +1,5 @@
 ---
-- name: Install software needed ro run ansible playbooks
+- name: Install software needed to run every ansible playbook in this repo
   hosts: local
   become: true
   roles:
