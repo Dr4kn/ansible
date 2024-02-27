@@ -10,8 +10,6 @@
         name:
           - flatpak
           - git
-          - openjdk-19-jre
-          - openjdk-11-jre
           - neofetch
           - vim
           - gnome-extensions-app
@@ -31,7 +29,6 @@
     state: present
     method: user
   with_items:
-    - com.valvesoftware.Steam
     - com.spotify.Client
     - org.mozilla.firefox
     - org.onlyoffice.desktopeditors
@@ -39,21 +36,8 @@
     - com.bitwarden.desktop
     - md.obsidian.Obsidian
     - com.calibre_ebook.calibre
-    - org.flameshot.Flameshot
     - io.mpv.Mpv
     - io.github.celluloid_player.Celluloid
     - org.videolan.VLC
-    - org.kicad.KiCad
-    - net.ankiweb.Anki
     - de.haeckerfelix.Fragments
     - org.chromium.Chromium
-
-# curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash - &&\
-# sudo apt-get install -y nodejs
-
-- name: install gtop globally
-  npm:
-    name: gtop
-    global: true
-    state: present
-  become: true
