@@ -5,28 +5,5 @@
     dest: ~/.gitconfig
     mode: 0664
 
-- name: kensington trackball button switch as bin
-  copy:
-    src: kensington_trackball.bash
-    dest: /usr/bin/kensington_trackball
-    mode: 0751
-  register: trackball
-  become: true
-
-- name: Create cron job that removes unused flatpak dependencies
-  cron:
-    name: "remove flatpak dependencies that aren't used anymore"
-    special_time: daily
-    job: "yes | flatpak uninstall --unused"
-
 - name: install vim and add all the configuration
   import_tasks: vim.yml
-
-- name: install the fonts I use
-  import_tasks: install_fonts.yml
-
-- name: install programs I use
-  import_tasks: install_programs.yml
-
-- name: install input remapper and configure it
-  import_tasks: install_input-remapper.yml
