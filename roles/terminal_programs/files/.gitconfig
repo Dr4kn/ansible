@@ -65,7 +65,7 @@
 	ri = rebase -i
 	# rebase interactive fast
 	# set high enough for pretty much every rebase I do
-	rif = rebase -i HEAD~20
+	rif = rebase -i HEAD~10
 
 	# remove file or directory from staging
 	unstage = reset HEAD -- 
