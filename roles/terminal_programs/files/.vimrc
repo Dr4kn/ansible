@@ -7,11 +7,11 @@ set relativenumber
 " increase undo limit
 set history=1000
 " undo even when file was closed
-set undodir=~/.vim/.undo//
+set undodir=~/.vim/.undo/
 " a copy of the file when you opened it
-set backupdir=~/.vim/.backup//
+set backupdir=~/.vim/.backup/
 " contains unsaved changes
-set directory=~/.vim/.swp//
+set directory=~/.vim/.swp/
 " go half a screen up or down and move cursor in the middle of the screen
 noremap <C-d> <C-d>zz
 noremap <C-u> <C-u>zz
