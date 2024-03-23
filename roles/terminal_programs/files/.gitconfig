@@ -1,15 +1,37 @@
 [user]
 	email = servicesDrkn@gmail.com
 	name = Dr4kn
-[credential]
-	helper = store
-[safe]
-	directory = /home/adrian/Documents/Programming/ansible-config
-[init]
-	defaultBranch = main
+# puts stuff like branches into columns
+[branch]
+	sort = -committerdate
+[column]
+	ui = auto
 [core]
 	editor = vim
+[credential]
+	helper = store
+[help]
+	autocorrect = 20
+[init]
+	defaultBranch = main
+# if you fixed a merge conflict once git remembers it
+[rerere]
+	enabled = true
 
+    # run it in every active repository
+    # it just makes git faster
+    # git maintenance start
+
+    # things for large repositories
+    #
+    # makes running git status in large repositories much faster
+    # git config core.fsmonitor true
+    #
+    # only downloades the blobs for your wd
+    # git clone --filter=blob=none 
+
+    
+    
 [alias]
 	# graph view with pretty formating
 	graph = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all	
@@ -22,6 +44,7 @@
 	s = status
 	# less verbose version of status
 	st = status -sb
+    # generally just use switch instead of checkout
 	co = checkout
 	check = co
 	cm = commit -m
@@ -53,5 +76,20 @@
 	# https://git-scm.com/docs/git-bisect
 	debug = bisect
 
-[help]
-	autocorrect = 20
+    # ignore white 
+    # and detect lines moved or copied in same commit
+    # or the commit that created the file
+    # or any commit at all
+    #
+    # can give line range with -L x:x path/to/file 
+    bblame = blame -w -C -C -C
+
+    wdiff = diff --word-diff
+
+    # saver force push
+    fwl = --force-with-lease
+
+    # pretty much only usefull for building
+    dclone = clone --depth=1
+
+    # reflog = what you've done locally
