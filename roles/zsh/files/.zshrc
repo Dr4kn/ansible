@@ -57,6 +57,21 @@ zinit wait lucid for \
         ael-code/zsh-colored-man-pages \
         supercrabtree/k
 
+# loads several git plugins 1s after prompt
+zi as'null' lucid sbin wait'1' for \
+  Fakerr/git-recall \
+  davidosomething/git-my \
+  iwata/git-now \
+  paulirish/git-open \
+  paulirish/git-recent \
+    atload'export _MENU_THEME=legacy' \
+  arzzen/git-quick-stats \
+    make'install' \
+  tj/git-extras \
+    make'GITURL_NO_CGITURL=1' \
+    sbin'git-url;git-guclone' \
+  zdharma-continuum/git-url
+
 # ZSH AUTOCOMPLETE CONFIG
 # First autocomplete common strings and then show the menu:
 # all Tab widgets
