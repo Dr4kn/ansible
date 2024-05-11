@@ -8,7 +8,7 @@
   file:
     path: ~/.vim/{{ item }}
     state: directory
-    mode: "0775"
+    mode: "0777"
   with_items:
     - .backup
     - .swp
@@ -17,7 +17,7 @@
 - name: vim config
   copy:
     src: .vimrc
-    dest: ~/.vimrc
+    dest: ~/.vim/.vimrc
     mode: 0664
 
 - name: check if ideavimrc link already existsts
@@ -26,7 +26,7 @@
 
 - name: IntelliJ vim config
   file:
-    src: ~/.vimrc
+    src: ~/.vim/.vimrc
     dest: ~/.ideavimrc
     state: link
   when: link.stat.islnk is not defined
